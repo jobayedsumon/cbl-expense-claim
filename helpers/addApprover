@@ -1,0 +1,16 @@
+$('#addApprover').on('click', function () {
+            let newItem = '<tr>\
+                <td>1</td>\
+            <td>\
+                <select name="approver[]" class="approver">\
+                    <option value="Abdullah">Abdullah</option>\
+                </select>\
+            </td>\
+            <td>Manager, IT</td>\
+            <td></td>\
+            <td></td>\
+        </tr>';
+
+            $('#approvalHistoryTable tbody:last').append(newItem);
+            $('#approvalHistoryTable tbody:last tr').find('select').select2();
+        });
