@@ -170,7 +170,7 @@ $(document).ready(function () {
                     "<td class='text-right tableAdjustAmount'>" + parseFloat(adjustment.adjust_amount).toFixed(2) + "</td>" +
                     "<td class='text-right tableRemainingAmount'>" + parseFloat(remainingAmount).toFixed(2) + "</td>" +
                     "<td class='tableRemarks'>" + adjustment.remarks + "</td>" +
-                    "<td><a data-id='"+adjustment.exc_advance_adjustments_id+"' class='editAdjustment fa fa-edit text-success'></a>" +
+                    "<td class='text-center'><a data-id='"+adjustment.exc_advance_adjustments_id+"' class='editAdjustment fa fa-edit text-success'></a>" +
                     "<a data-id='"+adjustment.exc_advance_adjustments_id+"' class='deleteAdjustment fa fa-times text-danger'></a></td>" +
                     "</tr>";
 
@@ -401,6 +401,8 @@ $(document).ready(function () {
                     '</tr>';
 
                 $(tableID+' tbody tr').eq(serial-1).replaceWith(nestedRow);
+
+                $('#editCostCenterModal').modal('hide');
             }
 
         });

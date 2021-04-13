@@ -4,7 +4,7 @@
 <div class="row" style="margin-bottom: 10px">
     <div class="col-md-6 col-sm-6" style="display: flex; align-items: center">
         <select id="approver">,
-            <option value="null">Please select one</option>
+            <option value="">Please select one</option>
             <?php
             if ($employee_list) {
                 foreach ($employee_list as $employee) {
@@ -19,7 +19,7 @@
     <div class="col-md-6 col-sm-6">
         <div class="form-group">
             <label for="" style="margin-right: 10px">Approval Process Type </label>
-            <input type="radio" <?php echo $claim_information->claim->approval_process_type == 1 ? 'checked': ''; ?> name="APPROVAL_PROCESS_TYPE" value="1" required> Automatic
+            <input type="radio" <?php echo $claim_information->claim->approval_process_type == 1 || $claim_information->claim->approval_process_type == null ? 'checked': ''; ?> name="APPROVAL_PROCESS_TYPE" value="1" required> Automatic
             <input type="radio" <?php echo $claim_information->claim->approval_process_type == 2 ? 'checked': ''; ?> name="APPROVAL_PROCESS_TYPE" value="2" required> Manual
         </div>
     </div>
@@ -43,7 +43,7 @@
                 <td data-approver-id="<?php echo $approver->approval_person; ?>"><?php echo $approver->sort_no; ?></td>
                 <td class="approvalPersonName"><?php echo $approver->approval_person_name; ?></td>
                 <td><?php echo $approver->designation_name; ?></td>
-                <td><a class="fa fa-times text-danger removeApprover"></a></td>
+                <td class="text-center"><a class="fa fa-times text-danger removeApprover"></a></td>
             </tr>
 
         <?php }} ?>

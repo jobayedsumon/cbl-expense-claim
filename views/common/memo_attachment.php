@@ -41,7 +41,7 @@
             ?>
             <tr>
                 <td><?php echo $attachment->file_name; ?></td>
-                <td>
+                <td class="text-center">
                     <a href="<?php echo excs_url().'/attachments/download?FILE_LOC='.$attachment->file_loc; ?>" class="fa fa-download text-success downloadAttachment"></a>
                     <a data-name="<?php echo $attachment->file_name; ?>" class="fa fa-times text-danger deleteAttachment"></a>
                 </td>

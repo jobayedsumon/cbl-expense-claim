@@ -213,9 +213,11 @@ $(document).ready(function () {
             var newRow = '<tr><td data-approver-id="'+approverID+'">'+lastSerial+'</td>\
             <td class="approvalPersonName">'+approverName+'</td>\
             <td>'+approverDesignation+'</td>\
-            <td><a class="fa fa-times text-danger removeApprover"></a></td></tr>';
+            <td class="text-center"><a class="fa fa-times text-danger removeApprover"></a></td></tr>';
 
             $('#approvalPersonTable tbody:last').append(newRow);
+
+            $('#approver').val('').trigger('change');
         }
 
     });
@@ -224,15 +226,19 @@ $(document).ready(function () {
         $(this).closest('tr').remove();
     });
 
-    $('#currency').on('change', function () {
+    $('#currency').on('select2-selecting', function (e) {
+        var previousValue = $(this).val();
         if ($('#advanceDetailsTable tbody tr').length > 0 || $('#expenseDetailsTable tbody tr').length > 0) {
             bootbox.alert({
                 message: "Please remove all items in order to change this.",
-                className: 'text-danger'
+                className: 'text-danger',
+                callback: function () {
+                    $('#currency').val(previousValue).trigger('change');
+                }
             });
+
         } else {
-            var currencyCode = $(this).val();
-            console.log(currencyCode);
+            var currencyCode = e.val;
             if (currencyCode !== 'BDT') {
                 $('.bdtInfo').show();
             } else {
@@ -345,7 +351,7 @@ $(document).ready(function () {
                 var newRows = '';
 
                 $.each(files, function (index, item) {
-                    newRows += '<tr><td>'+item.file_name+'</td><td>\
+                    newRows += '<tr><td>'+item.file_name+'</td><td class="text-center">\
                             <a href="'+EXCS_URL+'/attachments/download?FILE_LOC='+item.file_loc+'" class="fa fa-download text-success downloadAttachment"></a>\
                             <a data-name="'+item.file_name+'" class="fa fa-times text-danger deleteAttachment"></a></td></tr>'
                 });

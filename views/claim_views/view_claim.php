@@ -42,7 +42,7 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
 
                             <tr>
                                 <th>Claim Status </th>
-                                <td class="<?php echo $status_color ?>"><?php echo $claim_information->claim->status_name; ?></td>
+                                <td class="<?php echo $status_color ?>"><strong><?php echo $claim_information->claim->status_name; ?></strong></td>
                             </tr>
 
                             <tr>

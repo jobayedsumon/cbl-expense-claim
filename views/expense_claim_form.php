@@ -94,7 +94,7 @@
                                                             <td class="text-right"><?php echo number_format($cca->budget_allocated, 2, '.', ''); ?></td>
                                                             <td class="text-right"><?php echo number_format($cca->budget_utilized, 2, '.', ''); ?></td>
                                                             <td class="text-right"><?php echo number_format($cca->allocation_amount, 2, '.', ''); ?></td>
-                                                            <td>
+                                                            <td class="text-center">
                                                                 <a data-id="<?php echo $cca->exc_cc_allocations_id; ?>"
                                                                    data-line-item="<?php echo $lineItem; ?>"
                                                                    data-serial="<?php echo $indexInner+1; ?>"
@@ -168,7 +168,7 @@
                                     <td class="text-right tableAdjustAmount"><?php echo number_format($adjustment->adjust_amount, 2, '.', ''); ?></td>
                                     <td class="text-right tableRemainingAmount"><?php echo number_format($remaining_amount, 2, '.', ''); ?></td>
                                     <td class="tableRemarks"><?php echo $adjustment->remarks; ?></td>
-                                    <td>
+                                    <td class="text-center">
                                         <a data-id="<?php echo $adjustment->exc_advance_adjustments_id; ?>" class="editAdjustment fa fa-edit text-success"></a>
                                         <a data-id="<?php echo $adjustment->exc_advance_adjustments_id; ?>" class="deleteAdjustment fa fa-times text-danger"></a>
                                     </td>

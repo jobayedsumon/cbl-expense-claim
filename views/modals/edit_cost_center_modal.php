@@ -68,12 +68,11 @@
 
                     </div>
 
-                    <button type="submit" style="margin-bottom: 5px" class="btn customBtn pull-right">Update</button>
+
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <!--                    <button type="submit" class="btn customBtn">Submit</button>-->
+                    <button type="submit" style="margin-bottom: 5px" class="btn customBtn pull-right">Update</button>
                 </div>
             </form>
 
