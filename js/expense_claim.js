@@ -330,6 +330,7 @@ $(document).ready(function () {
                 $('#allocationTable tbody:last').append(newRow);
 
                 var lineItem = $('#ccLineItemInput').val();
+                var totalAmount = $('#totalClaimAmount').val();
                 var tableID = '#ccAllocationNestedTable'+lineItem;
 
                 let lastSerial = $(tableID+' tbody tr').length;
@@ -343,14 +344,63 @@ $(document).ready(function () {
                     '<td class="text-right">'+parseFloat(newData.budget_utilized).toFixed(2)+'</td> ' +
                     '<td class="text-right">'+parseFloat(newData.allocation_amount).toFixed(2)+'</td> ' +
                     '<td class="text-center">' +
-                    '<a data-id="'+newData.exc_cc_allocations_id+'" class="fa fa-edit text-success editCostCenter"></a>' +
+                    '<a data-id="'+newData.exc_cc_allocations_id+'" data-details-id="'+newData.exc_claim_details_id+'" ' +
+                    'data-line-item="'+lineItem+'" data-serial="'+lastSerial+'" data-total-amount="'+totalAmount+'" class="fa fa-edit text-success editCostCenter"></a>' +
                     '<a data-id="'+newData.exc_cc_allocations_id+'" class="fa fa-times text-danger deleteCostCenter"></a>' +
                     '</td> ' +
                     '</tr>';
 
                 $(tableID+' tbody:last').append(nestedRow);
 
+            }
 
+        });
+    });
+
+    $('#editCostCenterModalForm').on('submit', function (e) {
+        var id = $('#ccId').val();
+        e.preventDefault();
+        var data = new FormData(this);
+        data.append('CLAIM_DATE', $('input[name="CLAIM_DATE"]').val());
+
+        var object = {};
+        data.forEach(function(value, key){
+            object[key] = value;
+        });
+        var jsonData = JSON.stringify(object);
+
+        $.ajax({
+            url: EXCS_URL+'/excs/claims/cc_allocations/'+id,
+            type: 'PUT',
+            processData: false,
+            contentType: false,
+            cache: false,
+            data: jsonData,
+            error: function(error) {
+                console.log(error)
+            },
+            success: function(response) {
+                var newData = removeNullFromObject(response.data.row);
+                var lineItem = $('#ccLineItem').val();
+                var serial = $('#editCcSerial').val();
+                var tableID = '#ccAllocationNestedTable'+lineItem;
+
+                var nestedRow = '<tr>' +
+                    '<td>'+serial+'</td> ' +
+                    '<td>'+newData.sol_name+'</td> ' +
+                    '<td>'+newData.cost_center_name+'</td> ' +
+                    '<td class="text-right">'+parseFloat(newData.allocation_ratio).toFixed(2)+'</td> ' +
+                    '<td class="text-right">'+parseFloat(newData.budget_allocated).toFixed(2)+'</td> ' +
+                    '<td class="text-right">'+parseFloat(newData.budget_utilized).toFixed(2)+'</td> ' +
+                    '<td class="text-right">'+parseFloat(newData.allocation_amount).toFixed(2)+'</td> ' +
+                    '<td class="text-center">' +
+                    '<a data-id="'+newData.exc_cc_allocations_id+'" data-details-id="'+newData.exc_claim_details_id+'" ' +
+                    'data-line-item="'+lineItem+'" data-serial="'+serial+'" class="fa fa-edit text-success editCostCenter"></a>' +
+                    '<a data-id="'+newData.exc_cc_allocations_id+'" class="fa fa-times text-danger deleteCostCenter"></a>' +
+                    '</td> ' +
+                    '</tr>';
+
+                $(tableID+' tbody tr').eq(serial-1).replaceWith(nestedRow);
             }
 
         });
@@ -380,6 +430,46 @@ $(document).ready(function () {
 
     });
 
+    $(document).on('click', '.editCostCenter', function () {
+        var ccID = $(this).data('id');
+        var detailsId = $(this).data('details-id');
+        var ccLineItem = $(this).data('line-item');
+        var editCcSerial = $(this).data('serial');
+        var totalClaimAmount = $(this).data('total-amount');
+        $.ajax({
+            url: EXCS_URL+'/excs/claims/cc_allocations/'+ccID+'/edit',
+            type: 'GET',
+            error: function(xhr, status, error) {
+                console.log('xhr: ');
+                console.log(xhr);
+                console.log('status: ' + status);
+                console.log('error: ' + error);
+            },
+            success: function (response) {
+                $('#editAllocationRatio').val(response.data.row.allocation_ratio);
+                $('#editAllocationAmount').val(response.data.row.allocation_amount);
+                $('#ccId').val(ccID);
+                $('#editCcSerial').val(editCcSerial);
+                $('#editCcDetailsId').val(detailsId);
+                $('#ccLineItem').val(ccLineItem);
+                $('#editTotalClaimAmount').val(totalClaimAmount);
+
+                $('#editCcCode option').filter(function() {
+                    return this.value === response.data.row.cost_center_code;
+                }).prop('selected', true);
+
+                $('#editSolCode option').filter(function() {
+                    return this.value === response.data.row.sol_code;
+                }).prop('selected', true);
+
+                $('#editCcCode, #editSolCode').select2().trigger('change');
+
+                $('#editCostCenterModal').modal('show');
+            }
+
+        });
+    });
+
     $('.allocationRatio').on('keyup', function () {
         var ratio = $(this).val();
         var totalClaimAmount = $('#totalClaimAmount').val();
@@ -387,9 +477,23 @@ $(document).ready(function () {
         $('.allocationAmount').val(allocationAmount.toFixed(2));
     });
 
+    $('#editAllocationRatio').on('keyup', function () {
+        var ratio = $(this).val();
+        var totalClaimAmount = $('#editTotalClaimAmount').val();
+        var allocationAmount = (totalClaimAmount * ratio) / 100;
+        $('.allocationAmount').val(allocationAmount.toFixed(2));
+    });
+
     $('.allocationAmount').on('keyup', function () {
         var allocationAmount = $(this).val();
         var totalClaimAmount = $('#totalClaimAmount').val();
+        var ratio = (allocationAmount * 100) / totalClaimAmount;
+        $('.allocationRatio').val(ratio.toFixed(2));
+    });
+
+    $('#editAllocationAmount').on('keyup', function () {
+        var allocationAmount = $(this).val();
+        var totalClaimAmount = $('#editTotalClaimAmount').val();
         var ratio = (allocationAmount * 100) / totalClaimAmount;
         $('.allocationRatio').val(ratio.toFixed(2));
     });

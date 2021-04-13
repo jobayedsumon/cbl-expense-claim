@@ -35,6 +35,7 @@
                    console.log('error: ' + error);
                },
                success: function(response) {
+                   console.log(response);
                    var id = response.data.claim.exc_claim_requests_id;
                    var url = BASE_URL+'excs/view_claim/'+id;
                    window.location.href = url;

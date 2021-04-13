@@ -96,6 +96,12 @@
                                                             <td class="text-right"><?php echo number_format($cca->allocation_amount, 2, '.', ''); ?></td>
                                                             <td>
                                                                 <a data-id="<?php echo $cca->exc_cc_allocations_id; ?>"
+                                                                   data-line-item="<?php echo $lineItem; ?>"
+                                                                   data-serial="<?php echo $indexInner+1; ?>"
+                                                                   data-details-id="<?php echo $cca->exc_claim_details_id; ?>"
+                                                                   data-total-amount="<?php echo $claim_details->line_total_bdt; ?>"
+                                                                   class="fa fa-edit text-success editCostCenter"></a>
+                                                                <a data-id="<?php echo $cca->exc_cc_allocations_id; ?>"
                                                                    class="fa fa-times text-danger deleteCostCenter"></a>
                                                             </td>
                                                         </tr>
@@ -214,6 +220,9 @@
 
 <!-- COST CENTER Modal -->
 <?php $this->load->view('modals/cost_center_modal'); ?>
+
+<!--Edit COST CENTER Modal -->
+<?php $this->load->view('modals/edit_cost_center_modal'); ?>
 
 
 <script>
