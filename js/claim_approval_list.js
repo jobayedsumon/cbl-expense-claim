@@ -93,7 +93,7 @@ var month = '';
 var bill_id = '';
 function view_claim(){
     selected_tr = $("table#my_table tr.selected");
-    url = BASE_URL+'excs/view_claim/'+selected_tr.find("div.exc_claim_requests").eq(0).attr('exc_claim_requests_id');
+    url = BASE_URL+'excs/view_claim/'+selected_tr.find("div.exc_claim_requests").eq(0).attr('exc_claim_requests_id')+'?approver';
     window.location.href = url;
 }
 function edit_claim(){

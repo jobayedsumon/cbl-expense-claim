@@ -1,7 +1,7 @@
 
 <link rel="stylesheet" href="<?php echo base_url('application/modules/excs/css/excs_common.css') ?>">
 
-<div class="container-fluid" style="padding-top: 20px">
+<div class="container-fluid">
     <div style="text-align: right; margin-bottom: 5px;">
         <!-- <a class="btn btn-info" title="View" id="common_view_btn" target="_blank" href="" style="display: none;"><i class="fa fa-eye"></i>View</a>
         <a class="btn btn-success" title="Edit" id="common_edit_btn" target="_blank" href="" style="display: none;"><i class="fa fa-pencil"></i>Edit</a> -->

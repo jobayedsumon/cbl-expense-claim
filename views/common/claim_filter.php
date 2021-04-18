@@ -54,25 +54,30 @@
                 </div>
                 <div class="col-md-3 col-sm-3">
                     <div class="form-group">
-                        <label for="claimDate">Claim Date</label>
-                        <input type="text"
-                               class="form-control" id="claimDate" name="CLAIM_DATE">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3 col-sm-3">
-                    <div class="form-group">
                         <label for="claimCode">Claim Code</label>
                         <input type="text"
                                class="form-control" id="claimCode" name="CLAIM_CODE">
                     </div>
                 </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 col-sm-3">
+                    <div class="form-group">
+                        <label for="claimType">Date Type</label>
+                        <select class="form-control" id="dateType" name="DATE_TYPE">
+                            <option value="">Please Select One</option>
+                            <option value="1">Created On</option>
+                            <option value="2">Claim Date</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="col-md-4 col-sm-4">
                     <div class="form-group">
-                        <label for="createdOn">Created On</label>
-                        <div class="input-daterange input-group" id="createdOn">
+                        <label for="createdOn">Date Range</label>
+                        <div class="input-daterange input-group" id="dateRange">
                             <input type="text" class="input-sm form-control" id="startDate" name="start" />
                             <span class="input-group-addon">to</span>
                             <input type="text" class="input-sm form-control" id="endDate" name="end" />

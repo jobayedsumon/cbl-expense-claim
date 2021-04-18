@@ -588,7 +588,17 @@ class Excs extends Custom_Controller
         $data['employee_list'] = $this->get_employee_list();
         $level = $this->session->userdata('LEVEL_ID');
         $data['level'] = $level;
+        $data['approver_view'] = false;
+        $data['admin_view'] = false;
 
+        if ($this->input->get()) {
+            if(array_key_exists('approver', $this->input->get())) {
+                $data['approver_view'] = true;
+            }
+            if(array_key_exists('admin', $this->input->get())) {
+                $data['admin_view'] = true;
+            }
+        }
         if (empty($level)) {
             redirect(base_url('login_cont'));
         } else {
@@ -598,11 +608,15 @@ class Excs extends Custom_Controller
 
     public function change_approval_person()
     {
+        $data['title'] = 'Change Approval Person';
+        $data['employee_list'] = $this->get_employee_list();
+        $data['statuses'] = $this->get_statuses();
+        $data['employee_information'] = $this->get_employee_information();
         $level = $this->session->userdata('LEVEL_ID');
         if (empty($level)) {
             redirect(base_url('login_cont'));
         } else {
-            $this->render_page('change_approval_person');
+            $this->render_page('change_approval_person', $data);
         }
     }
 

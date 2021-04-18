@@ -2,7 +2,7 @@
     <div class="col-md-6 col-sm-6">
         <div class="panel panel-danger">
             <div class="panel-heading">
-                <h3 class="panel-title">Take action for this claim</h3>
+                <h3 class="panel-title"><strong>Take action for this claim</strong></h3>
             </div>
             <div class="panel-body">
                 <input type="hidden" id="currentApprovalPerson" value="<?php echo $this->user->EMPLOYEE_ID; ?>">
@@ -14,15 +14,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2 col-sm-2">
+                    <div class="col-md-6 col-sm-6">
                         <button class="btn btn-success" onclick="claim_action('APPROVE')">APPROVE</button>
+                        <button class="btn btn-danger" onclick="claim_action('RETURN')">RETURN</button>
+                        <button class="btn btn-warning" onclick="claim_action('HOLD')">HOLD</button>
                     </div>
-                    <div class="col-md-2 col-sm-2">
-                        <button class="btn btn-danger" onclick="claim_action('DECLINE')">DECLINE</button>
-                    </div>
-                    <div class="col-md-2 col-sm-2">
-                        <button class="btn btn-warning" onclick="claim_action('RETURN')">QUERY</button>
-                    </div>
+
                 </div>
 
             </div>

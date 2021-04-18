@@ -92,7 +92,7 @@
                                                             <td><?php echo $cca->cost_center_name; ?></td>
                                                             <td class="text-right"><?php echo number_format($cca->allocation_ratio, 2, '.', ''); ?></td>
                                                             <td class="text-right"><?php echo number_format($cca->budget_allocated, 2, '.', ''); ?></td>
-                                                            <td class="text-right"><?php echo number_format($cca->budget_utilized, 2, '.', ''); ?></td>
+                                                            <td class="text-right"><?php echo number_format($cca->actual+$cca->in_transit, 2, '.', ''); ?></td>
                                                             <td class="text-right"><?php echo number_format($cca->allocation_amount, 2, '.', ''); ?></td>
                                                             <td class="text-center">
                                                                 <a data-id="<?php echo $cca->exc_cc_allocations_id; ?>"

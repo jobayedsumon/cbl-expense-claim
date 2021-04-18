@@ -1,7 +1,7 @@
 
 <link rel="stylesheet" href="<?php echo base_url('application/modules/excs/css/excs_common.css') ?>">
 
-<div class="container-fluid" style="padding-top: 20px">
+<div class="container-fluid">
     <div style="text-align: right; margin-bottom: 5px;">
         <!-- <a class="btn btn-info" title="View" id="common_view_btn" target="_blank" href="" style="display: none;"><i class="fa fa-eye"></i>View</a>
         <a class="btn btn-success" title="Edit" id="common_edit_btn" target="_blank" href="" style="display: none;"><i class="fa fa-pencil"></i>Edit</a> -->
@@ -33,14 +33,15 @@
                         <tr>
                             <th class="text-center"><input type="checkbox" id="chk_all_at_a_time" class="chk_all_at_a_time"></th>
                             <th class="text-center">#</th>
-                            <th class="text-center">Claim Code</th>
-                            <th class="text-center">Claim Date</th>
-                            <th class="text-center">Claim Type</th>
-                            <th class="text-center">Claim Amount</th>
-                            <th class="text-center">Claim Amount(BDT)</th>
-                            <th class="text-center">Created At</th>
-                            <th class="text-center">Created  By</th>
-                            <th class="text-center">On Behalf of</th>
+                            <th>Claim Code</th>
+                            <th>Claim Date</th>
+                            <th>Claim Type</th>
+                            <th>Claim Amount</th>
+                            <th>Claim Amount(BDT)</th>
+                            <th>Created At</th>
+                            <th>Created  By</th>
+                            <th>On Behalf of</th>
+                            <th>Status</th>
                         </tr>
                         </thead>
                         <tbody>

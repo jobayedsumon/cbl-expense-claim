@@ -9,10 +9,10 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
 <div class="col-lg-12 no_padding" style="padding-top: 20px">
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><strong>Claim Information</strong></h3>
+                    <h3 class="panel-title"><strong style="font-size: 16px !important;">Claim Information (<?php echo $claim_information->claim->exc_claim_type_name; ?>)</strong></h3>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -25,11 +25,6 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
                                 <th>Claim Code </th>
                                 <td><?php echo $claim_information->claim->claim_code; ?></td>
                             </tr>
-                            <tr>
-                                <th>Claim Type </th>
-                                <td><?php echo $claim_information->claim->exc_claim_type_name; ?></td>
-                            </tr>
-
                             <tr>
                                 <th>Created By </th>
                                 <td><?php echo $claim_information->claim->created_by_name; ?></td>
@@ -65,10 +60,15 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
                                 <td><?php echo number_format($claim_information->claim->total_amount, 2, '.', ''); ?></td>
                             </tr>
 
-                            <tr>
-                                <th>Total Amount(BDT) </th>
-                                <td><?php echo number_format($claim_information->claim->total_amount_bdt, 2, '.', ''); ?></td>
-                            </tr>
+                            <?php if ($claim_information->claim->currency_code != 'BDT') { ?>
+                                <tr>
+                                    <th>Total Amount(BDT) </th>
+                                    <td><?php echo number_format($claim_information->claim->total_amount_bdt, 2, '.', ''); ?></td>
+                                </tr>
+                            <?php } ?>
+
+
+
 
                             <tr>
                                 <th>Memo </th>
@@ -87,7 +87,7 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
             </div>
         </div>
 
-        <div class="col-lg-3">
+        <div class="col-lg-4">
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <h3 class="panel-title"><strong>Employee Information</strong></h3>
@@ -151,7 +151,7 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
 
                             <tr>
                                 <th>Account Name </th>
-                                <td><?php echo $employee_information->account_name; ?></td>
+                                <td style="width: 50%"><?php echo $employee_information->account_name; ?></td>
                             </tr>
                             <tr>
                                 <th>Type of Transaction </th>
@@ -209,7 +209,10 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
                                 <th>Unit Rate</th>
                                 <th>Quantity</th>
                                 <th>Amount</th>
-                                <th>Amount (BDT)</th>
+                                <?php if ($claim_information->claim->currency_code != 'BDT') { ?>
+                                    <th>Amount (BDT)</th>
+                                <?php } ?>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -233,7 +236,9 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
                                         <td class="text-right tableRate"><?php echo number_format($claim_details->rate, 2, '.', ''); ?></td>
                                         <td class="text-right tableQuantity"><?php echo $claim_details->qty; ?></td>
                                         <td class="text-right lineTotal"><?php echo number_format($claim_details->line_total, 2, '.', ''); ?></td>
-                                        <td class="text-right lineTotalBDT"><?php echo number_format($claim_details->line_total_bdt, 2, '.', ''); ?></td>
+                                        <?php if ($claim_information->claim->currency_code != 'BDT') { ?>
+                                            <td class="text-right lineTotalBDT"><?php echo number_format($claim_details->line_total_bdt, 2, '.', ''); ?></td>
+                                        <?php } ?>
                                     </tr>
 
                                     <?php if ($claim_information->claim->claim_type == 2) { ?>
@@ -298,9 +303,13 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
                                 <th class="text-right">
                                     <span class="grandTotal"></span>
                                 </th>
-                                <th class="text-right">
-                                    <span class="grandTotalBDT"></span>
-                                </th>
+
+                                <?php if ($claim_information->claim->currency_code != 'BDT') { ?>
+                                    <th class="text-right">
+                                        <span class="grandTotalBDT"></span>
+                                    </th>
+                                <?php } ?>
+
                             </tr>
                             </tfoot>
                         </table>
@@ -334,11 +343,11 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
                             </thead>
                             <tbody>
                             <?php if (isset($claim_information->approvers)) {
-                                foreach ($claim_information->approvers as $approver) {
-                                    if ($approver->approval_person == $this->user->EMPLOYEE_ID) $userIsApprover = true;
+                                foreach ($claim_information->approvers as $index => $approver) {
+                                    if ($approver->approval_person == $this->user->EMPLOYEE_ID && $approver->approval_action == 'Active' && $approver->approval_status == null) $userIsApprover = true;
                                     ?>
                                     <tr>
-                                        <td><?php echo $approver->sort_no; ?></td>
+                                        <td><?php echo $index+1; ?></td>
                                         <td class="approvalPersonName"><?php echo $approver->approval_person_name; ?></td>
                                         <td><?php echo $approver->designation_name; ?></td>
                                     </tr>
@@ -386,9 +395,9 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
 
     </div>
 
-    <?php if (in_array(100, $level)) $this->load->view('claim_views/change_approval_person_conditional'); ?>
+    <?php if (in_array(100, $level) && $admin_view) $this->load->view('claim_views/change_approval_person_conditional'); ?>
 
-    <?php if (isset($userIsApprover) && $userIsApprover) $this->load->view('claim_views/claim_action_conditional'); ?>
+    <?php if (isset($userIsApprover) && $userIsApprover == true && $approver_view) $this->load->view('claim_views/claim_action_conditional'); ?>
 
 </div>
 

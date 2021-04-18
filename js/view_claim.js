@@ -133,6 +133,13 @@ function calculateTotalAdjustmentAmount() {
 
     $('.totalAdjustmentAmount').text(totalAdjustmentAmount.toFixed(2));
 }
+function removeNullFromObject(object) {
+    return JSON.parse(JSON.stringify(object, (key, value) =>
+        value === null || value === undefined
+            ? 'N/A'
+            : value
+    ));
+}
 
 function claim_action(button) {
 

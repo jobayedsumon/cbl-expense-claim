@@ -341,7 +341,7 @@ $(document).ready(function () {
                     '<td>'+newData.cost_center_name+'</td> ' +
                     '<td class="text-right">'+parseFloat(newData.allocation_ratio).toFixed(2)+'</td> ' +
                     '<td class="text-right">'+parseFloat(newData.budget_allocated).toFixed(2)+'</td> ' +
-                    '<td class="text-right">'+parseFloat(newData.budget_utilized).toFixed(2)+'</td> ' +
+                    '<td class="text-right">'+parseFloat(newData.actual+newData.in_transit).toFixed(2)+'</td> ' +
                     '<td class="text-right">'+parseFloat(newData.allocation_amount).toFixed(2)+'</td> ' +
                     '<td class="text-center">' +
                     '<a data-id="'+newData.exc_cc_allocations_id+'" data-details-id="'+newData.exc_claim_details_id+'" ' +
@@ -391,7 +391,7 @@ $(document).ready(function () {
                     '<td>'+newData.cost_center_name+'</td> ' +
                     '<td class="text-right">'+parseFloat(newData.allocation_ratio).toFixed(2)+'</td> ' +
                     '<td class="text-right">'+parseFloat(newData.budget_allocated).toFixed(2)+'</td> ' +
-                    '<td class="text-right">'+parseFloat(newData.budget_utilized).toFixed(2)+'</td> ' +
+                    '<td class="text-right">'+parseFloat(newData.actual+newData.in_transit).toFixed(2)+'</td> ' +
                     '<td class="text-right">'+parseFloat(newData.allocation_amount).toFixed(2)+'</td> ' +
                     '<td class="text-center">' +
                     '<a data-id="'+newData.exc_cc_allocations_id+'" data-details-id="'+newData.exc_claim_details_id+'" ' +

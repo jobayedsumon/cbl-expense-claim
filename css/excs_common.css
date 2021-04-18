@@ -87,7 +87,7 @@ textarea {
 }
 
 .fa {
-    font-size: 12px !important;
+    font-size: 16px !important;
     padding: 2px;
     cursor: pointer;
 }
@@ -190,4 +190,8 @@ input.chk_claim:checked {
 
 .btn-info {
     background-color: #31b0d5 !important;
+}
+
+.bypass {
+    padding: 0 2px;
 }
