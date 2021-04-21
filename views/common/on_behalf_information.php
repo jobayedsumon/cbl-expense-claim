@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-6 col-sm-6">
                 <label>Code</label>
-                <p><?php echo $claim_information->claim->claim_code ?></p>
+                <p><?php echo isset($claim_information) ? $claim_information->claim->claim_code : $travel_plan->plan->travel_plan_code; ?></p>
                 <label>Designation</label>
                 <p id="designation"><?php echo $employee_information->designation_name ?></p>
                 <label>Grade</label>

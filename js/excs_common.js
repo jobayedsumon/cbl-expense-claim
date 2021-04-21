@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     $("input[type='date']").datepicker({dateFormat: "yyyy-MM-dd"});
 
-    $("input[type='date']").datepicker("setDate", new Date());
+    // $("input[type='date']").datepicker("setDate", new Date());
 
     $('.modalCalculation').on('keyup', function () {
         var totalAmount = 1;
@@ -186,7 +186,7 @@ $(document).ready(function () {
 
     $('#addApprover').on('click', function () {
 
-        if ($('#approver').val() === 'null') {
+        if (!$('#approver').val()) {
             return;
         }
 
@@ -276,7 +276,7 @@ $(document).ready(function () {
                 // var employeeInformation = JSON.parse(response);
                 var employee = response.data.employee;
                 $('.employeeName').text(employee.employee_name ?? 'N/A');
-                $('.employeeId').text(employee.employee_id ?? 'N/A');
+                $('input[name="UPDATED_BY"]').val(employee.employee_id);
                 $('#designation').text(employee.designation_name ?? 'N/A');
                 $('#organization').text(employee.organization ?? 'N/A');
                 $('#supervisorsName').text(employee.supervisor_name ?? 'N/A');
@@ -329,9 +329,9 @@ $(document).ready(function () {
         }
 
         data.append('CREATED_BY', $('input[name="UPDATED_BY"]').val());
-        data.append('REQUEST_ID', $('input[name="EXC_CLAIM_REQUESTS_ID"]').val());
+        data.append('REQUEST_ID', $('input[name="REQUEST_ID"]').val());
         data.append('MODULE_ID', 14); // EXC MODULE = 14
-        data.append('ATTACHMENT_FOR', 7); // ATTACHMENT FOR = 7
+        data.append('ATTACHMENT_FOR', $('input[name="ATTACHMENT_FOR"]').val());
         for (var pair of data.entries()) {
             console.log(pair[0]+ ', ' + pair[1]);
         }
@@ -346,9 +346,10 @@ $(document).ready(function () {
             processData: false,
             data: data,
             success: function (response) {
+                console.log(response);
                 var files = response.data.rows;
 
-                var newRows = '';
+                var newRows = '<tbody>';
 
                 $.each(files, function (index, item) {
                     newRows += '<tr><td>'+item.file_name+'</td><td class="text-center">\
@@ -356,7 +357,9 @@ $(document).ready(function () {
                             <a data-name="'+item.file_name+'" class="fa fa-times text-danger deleteAttachment"></a></td></tr>'
                 });
 
-                $('#attachmentsTable tbody:last').append(newRows);
+                newRows += '</tbody>';
+
+                $('#attachmentsTable tbody').replaceWith(newRows);
 
                 $('#attachment').val(null);
 
@@ -371,10 +374,10 @@ $(document).ready(function () {
     $(document).on('click', '.deleteAttachment', function (e) {
         var row = $(this).closest('tr');
         var data = {
-            "REQUEST_ID": $('input[name="EXC_CLAIM_REQUESTS_ID"]').val(),
+            "REQUEST_ID": $('input[name="REQUEST_ID"]').val(),
             "FILE_NAME": $(this).data('name'),
             "MODULE_ID": 14,
-            "ATTACHMENT_FOR": 7
+            "ATTACHMENT_FOR": $('input[name="ATTACHMENT_FOR"]').val()
         }
         var jsonData = JSON.stringify(data);
 

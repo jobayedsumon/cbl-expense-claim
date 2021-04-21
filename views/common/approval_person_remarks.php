@@ -1,3 +1,13 @@
+<?php
+if (isset($claim_information)) {
+    $data = $claim_information->claim;
+    $approvers = $claim_information->approvers;
+} else {
+    $data = $travel_plan->plan;
+    $approvers = $travel_plan->approval_persons;
+}
+?>
+
 <div class="tableHeading">
     <h3 class="panel-title-secondary">Approval Person</h3>
 </div>
@@ -17,11 +27,13 @@
         <a style="margin-left: 10px" id="addApprover" class="btn customBtn">Add</a>
     </div>
     <div class="col-md-6 col-sm-6">
+
         <div class="form-group">
             <label for="" style="margin-right: 10px">Approval Process Type </label>
-            <input type="radio" <?php echo $claim_information->claim->approval_process_type == 1 || $claim_information->claim->approval_process_type == null ? 'checked': ''; ?> name="APPROVAL_PROCESS_TYPE" value="1" required> Automatic
-            <input type="radio" <?php echo $claim_information->claim->approval_process_type == 2 ? 'checked': ''; ?> name="APPROVAL_PROCESS_TYPE" value="2" required> Manual
+            <input type="radio" <?php echo $data->approval_process_type == 1 || $data->approval_process_type == null ? 'checked': ''; ?> name="APPROVAL_PROCESS_TYPE" value="1" required> Automatic
+            <input type="radio" <?php echo $data->approval_process_type == 2 ? 'checked': ''; ?> name="APPROVAL_PROCESS_TYPE" value="2" required> Manual
         </div>
+
     </div>
 </div>
 
@@ -36,8 +48,8 @@
     </tr>
     </thead>
     <tbody>
-    <?php if (isset($claim_information->approvers)) {
-        foreach ($claim_information->approvers as $approver) {
+    <?php if (isset($approvers)) {
+        foreach ($approvers as $approver) {
             ?>
             <tr>
                 <td data-approver-id="<?php echo $approver->approval_person; ?>"><?php echo $approver->sort_no; ?></td>
@@ -51,10 +63,5 @@
 </table>
 
 <label for="">Remarks</label>
-<textarea class="form-control" name="REMARKS" id="remarks" ><?php echo $claim_information->claim->remarks; ?></textarea>
+<textarea class="form-control" name="REMARKS" id="remarks" ><?php echo $data->remarks; ?></textarea>
 
-<div style="margin-top: 10px">
-    <input type="hidden" name="UPDATED_BY" class="employeeID" value="<?php echo $employee_information->employee_id ?>">
-    <button id="save" name="save" class="btn customBtn">Save</button>
-    <button id="sendForApproval" name="sendForApproval" class="btn customBtn" style="background-color: green">Send for Approval</button>
-</div>

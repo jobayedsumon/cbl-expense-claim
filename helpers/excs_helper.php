@@ -24,3 +24,7 @@ function excs_url($uri = '')
   $local_mh = 'http://192.168.1.136/excs/backend/api';
   return $server;
 }
+
+function excs_amount($amount) {
+    return number_format($amount, 2, '.', '');
+}

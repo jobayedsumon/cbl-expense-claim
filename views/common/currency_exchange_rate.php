@@ -23,7 +23,7 @@
     </div>
     <div class="col-md-4 col-sm-4">
         <div class="form-group">
-            <label for="exampleFormControlInput1">Claim Date</label>
+            <label for="exampleFormControlInput1"><?php echo $date_label ?></label>
             <input type="date" data-date-format='yyyy-mm-dd'
                    class="form-control" id="claimDate" name="CLAIM_DATE" value="<?php echo $claim_information->claim->claim_date; ?>">
             <input type="hidden" name="CREATED_BY" value="<?php echo $employee_information->employee_id; ?>">

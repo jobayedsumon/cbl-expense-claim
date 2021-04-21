@@ -189,9 +189,36 @@
                         </tfoot>
                     </table>
 
-                    <?php $this->load->view('common/memo_attachment'); ?>
+                    <div class="row" style="margin-bottom: 10px">
+                        <div class="col-md-4 col-sm-4">
+                            <label for="">Memo</label>
+                            <select class="form-control" name="MEMO_NO" id="memoRefNo">
+                                <option value="">Please select one</option>
+                                <?php
+                                if ($memo_references) {
+                                    foreach ($memo_references as $memo) {
+                                        ?>
+                                        <option <?php echo $claim_information->claim->memo_no == $memo->memo_ref ? 'selected': ''; ?>
+                                                value="<?php echo $memo->memo_ref; ?>">
+                                            <?php echo $memo->memo_ref; ?>
+                                        </option>
+                                    <?php }} ?>
+                            </select>
+                        </div>
+                    </div>
 
-                    <?php $this->load->view('common/approval_person_submit'); ?>
+                    <input type="hidden" name="ATTACHMENT_FOR" value="7">
+                    <input type="hidden" name="REQUEST_ID" value="<?php echo $claim_information->claim->exc_claim_requests_id; ?>">
+
+                    <?php $this->load->view('common/attachment'); ?>
+
+                    <?php $this->load->view('common/approval_person_remarks'); ?>
+
+                    <div style="margin-top: 10px">
+                        <input type="hidden" name="UPDATED_BY" class="employeeID" value="<?php echo $employee_information->employee_id ?>">
+                        <button id="save" name="save" class="btn customBtn">Save</button>
+                        <button id="sendForApproval" name="sendForApproval" class="btn customBtn" style="background-color: green">Send for Approval</button>
+                    </div>
 
                 </div>
 
