@@ -112,6 +112,21 @@ class Excs extends Excs_Common
         }
     }
 
+    public function plan_list()
+    {
+        $data['title'] = 'Travel Plan List';
+        $data['employee_list'] = $this->get_employee_list();
+        $data['statuses'] = $this->get_statuses();
+        $data['employee_information'] = $this->get_employee_information();
+
+        $level = $this->session->userdata('LEVEL_ID');
+        if (empty($level)) {
+            redirect(base_url('login_cont'));
+        } else {
+            $this->render_page('plan_list', $data);
+        }
+    }
+
     public function claim_approval_list()
     {
         $data['title'] = 'Expense/Advance Claim Approval List';
@@ -163,6 +178,32 @@ class Excs extends Excs_Common
             redirect(base_url('login_cont'));
         } else {
             $this->render_page('change_approval_person', $data);
+        }
+    }
+
+    public function travel_passenger_details($plan_id)
+    {
+        $data['travel_plan'] = $this->get_plan_details($plan_id);
+        $data['employee_information'] = $this->get_employee_information();
+        $level = $this->session->userdata('LEVEL_ID');
+        if (empty($level)) {
+            redirect(base_url('login_cont'));
+        } else {
+            $this->render_page('travel_passenger_details', $data);
+        }
+    }
+
+    public function travel_cost_component($plan_id)
+    {
+        $data['travel_plan'] = $this->get_plan_details($plan_id);
+        $data['employee_information'] = $this->get_employee_information();
+        $data['cost_center_list'] = $this->get_cost_center_list();
+        $data['sol_list'] = $this->get_sol_list();
+        $level = $this->session->userdata('LEVEL_ID');
+        if (empty($level)) {
+            redirect(base_url('login_cont'));
+        } else {
+            $this->render_page('travel_cost_component', $data);
         }
     }
 

@@ -51,7 +51,7 @@ $(document).ready(function () {
                       message: 'The Plan has been saved successfully.',
                       className: 'text-success',
                       callback: function () {
-                          window.location.reload();
+                          window.location.href = url;
                       }
                   });
               }
@@ -59,4 +59,154 @@ $(document).ready(function () {
           });
       }
    });
+
+   $('#travelPassengerModalForm').on('submit', function (e) {
+       e.preventDefault();
+
+       var data = new FormData(this);
+       var object = {};
+       data.forEach(function (value, key) {
+           object[key] = value;
+       });
+       var jsonData = JSON.stringify(object);
+
+       $.ajax({
+           url: EXCS_URL+'/excs/travel_passengers',
+           type: 'POST',
+           processData: false,
+           contentType: false,
+           data: jsonData,
+           error: function(xhr, status, error) {
+               console.log('xhr: ');
+               console.log(xhr);
+               console.log('status: ' + status);
+               console.log('error: ' + error);
+           },
+           success: function(response) {
+               window.location.reload();
+           }
+
+       });
+
+   });
+
+    $('#editTravelPassengerModalForm').on('submit', function (e) {
+        e.preventDefault();
+        var id = $('#passengerDetailsId').val();
+
+        var data = new FormData(this);
+        var object = {};
+        data.forEach(function (value, key) {
+            object[key] = value;
+        });
+        var jsonData = JSON.stringify(object);
+
+        $.ajax({
+            url: EXCS_URL+'/excs/travel_passengers/'+id,
+            type: 'PUT',
+            processData: false,
+            contentType: false,
+            data: jsonData,
+            error: function(xhr, status, error) {
+                console.log('xhr: ');
+                console.log(xhr);
+                console.log('status: ' + status);
+                console.log('error: ' + error);
+            },
+            success: function(response) {
+                window.location.reload();
+            }
+
+        });
+
+    });
+
+   $(document).on('click', '.editPassenger', function () {
+      var id = $(this).data('id');
+
+       $.ajax({
+           url: EXCS_URL+'/excs/travel_passengers/'+id+'/edit',
+           type: 'GET',
+           error: function(xhr, status, error) {
+               console.log('xhr: ');
+               console.log(xhr);
+               console.log('status: ' + status);
+               console.log('error: ' + error);
+           },
+           success: function(response) {
+               var passenger = removeNullFromObject(response.data.passenger);
+                $('.passengerName').val(passenger.passenger_name);
+                $('.passportNo').val(passenger.passport_no);
+                $('.dateOfBarth').datepicker('setDate', new Date(passenger.dob));
+                $('.passportExpDate').datepicker('setDate', new Date(passenger.passport_exp_date));
+                $('.passengerType').select2('val', passenger.passenger_type);
+                $('#passengerDetailsId').val(id);
+
+                $('#editTravelPassengerModal').modal('show');
+           }
+
+       });
+
+   });
+
+   $(document).on('click', '.deletePassenger', function () {
+      var id = $(this).data('id');
+       $.ajax({
+           url: EXCS_URL+'/excs/travel_passengers/'+id,
+           type: 'DELETE',
+           error: function(xhr, status, error) {
+               console.log('xhr: ');
+               console.log(xhr);
+               console.log('status: ' + status);
+               console.log('error: ' + error);
+           },
+           success: function(response) {
+               window.location.reload();
+           }
+
+       });
+
+   });
+
+    $('#travelCostComponentModalForm').on('submit', function (e) {
+        e.preventDefault();
+        var data = new FormData(this);
+
+        var object = {};
+        data.forEach(function(value, key){
+            object[key] = value;
+        });
+        var jsonData = JSON.stringify(object);
+
+        $.ajax({
+            url: EXCS_URL+'/excs/travel_plans/tp_cc_allocations',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            cache: false,
+            data: jsonData,
+            error: function(error) {
+                console.log(error)
+            },
+            success: function(response) {
+                window.location.reload();
+            }
+
+        });
+    });
+
+    $('.allocationRatio').on('keyup', function () {
+        var ratio = $(this).val();
+        var totalTravelAmount = $('#totalTravelAmount').val();
+        var allocationAmount = (totalTravelAmount * ratio) / 100;
+        $('.allocationAmount').val(allocationAmount.toFixed(2));
+    });
+
+    $('.allocationAmount').on('keyup', function () {
+        var allocationAmount = $(this).val();
+        var totalTravelAmount = $('#totalTravelAmount').val();
+        var ratio = (allocationAmount * 100) / totalTravelAmount;
+        $('.allocationRatio').val(ratio.toFixed(2));
+    });
+
 });
