@@ -32,18 +32,18 @@
                     <table class="table table-bordered table-striped" id="my_table">
                         <thead>
                         <tr>
-                            <th class="text-center"><input type="checkbox" id="chk_all_at_a_time" class="chk_all_at_a_time"></th>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Claim Code</th>
-                            <th class="text-center">Claim Date</th>
-                            <th class="text-center">Claim Type</th>
-                            <th class="text-center">Claim Amount</th>
-                            <th class="text-center">Claim Amount(BDT)</th>
-                            <th class="text-center">Created At</th>
-                            <th class="text-center">Created  By</th>
-                            <th class="text-center">On Behalf of</th>
-                            <th class="text-center">Current Location</th>
-                            <th class="text-center">Status</th>
+                            <th><input type="checkbox" id="chk_all_at_a_time" class="chk_all_at_a_time"></th>
+                            <th>#</th>
+                            <th>Claim Code</th>
+                            <th>Claim Date</th>
+                            <th>Claim Type</th>
+                            <th>Claim Amount</th>
+                            <th>Claim Amount(BDT)</th>
+                            <th>Created At</th>
+                            <th>Created  By</th>
+                            <th>On Behalf of</th>
+                            <th>Current Location</th>
+                            <th>Status</th>
                         </tr>
                         </thead>
                         <tbody>

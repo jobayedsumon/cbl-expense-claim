@@ -199,3 +199,7 @@ input.chk_claim:checked {
 .bypass {
     padding: 0 2px;
 }
+
+.input-daterange > input {
+    text-align: left;
+}

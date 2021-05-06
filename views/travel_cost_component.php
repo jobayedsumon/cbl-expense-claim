@@ -9,58 +9,75 @@
     <div class="panel-body">
 
         <div class="container-fluid">
+            <a class="btn customBtn pull-right" data-toggle="modal" data-target="#travelCostComponentModal">Add</a>
+            <table id="travelCostComponentTable" class="table table-bordered table-condensed table-hover table-striped">
+                <thead >
+                <tr>
+                    <th>SL</th>
+                    <th>Expense Date</th>
+                    <th>Purpose</th>
+                    <th>Project</th>
+                    <th>Unit Rate</th>
+                    <th>Quantity</th>
+                    <th>Amount (<?php echo $travel_plan->plan->currency_code; ?>)</th>
+                    <?php if ($travel_plan->plan->currency_code != 'BDT') { ?>
+                        <th>Amount (BDT)</th>
+                   <?php } ?>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
 
-            <div class="row">
+                <?php if (isset($travel_plan->plan_details)) {
+                    foreach ($travel_plan->plan_details as $index => $plan_details) { ?>
+                        <tr>
+                            <td><?php echo $index+1; ?></td>
+                            <td><?php echo apsis_date($plan_details->expense_date); ?></td>
+                            <td><?php echo $plan_details->product_name; ?></td>
+                            <td ><?php echo $plan_details->project_name; ?></td>
+                            <td class="text-right"><?php echo excs_amount($plan_details->rate); ?></td>
+                            <td class="text-right"><?php echo $plan_details->qty; ?></td>
+                            <td class="text-right lineTotal"><?php echo excs_amount($plan_details->line_total); ?></td>
+                            <?php if ($travel_plan->plan->currency_code != 'BDT') { ?>
+                                <td class="text-right lineTotalBDT"><?php echo excs_amount($plan_details->line_total_bdt); ?></td>
+                            <?php } ?>
+                            <td class="text-center">
+                                <a data-id="<?php echo $plan_details->exc_travel_details_id; ?>" class="fa fa-edit text-success editCostComponent"></a>
+                                <a data-id="<?php echo $plan_details->exc_travel_details_id; ?>" class="fa fa-times text-danger deleteCostComponent"></a>
+                            </td>
 
-                <a class="btn customBtn pull-right" style="margin-bottom: 10px" data-toggle="modal"
-                   data-target="#travelCostComponentModal">Add</a>
+                        </tr>
 
-                <table id="travelCostComponentTable"
-                       class="table table-bordered table-condensed table-hover table-striped">
-                    <thead>
-                    <tr>
-                        <th>SL</th>
-                        <th>SOL</th>
-                        <th>CC</th>
-                        <th>Ratio(%)</th>
-                        <th>Budget Allocated</th>
-                        <th>Budget Utilized</th>
-                        <th>Budget Request</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php if (isset($travel_plan->cca)) {
-                        foreach ($travel_plan->cca as $index => $cca) {
-                            ?>
-                            <tr>
-                                <td class="tableSerial"><?php echo $index + 1; ?></td>
-                                <td><?php echo $cca->sol_name; ?></td>
-                                <td><?php echo $cca->cost_center_name; ?></td>
-                                <td class="text-right"><?php echo excs_amount($cca->allocation_ratio); ?></td>
-                                <td class="text-right"><?php echo excs_amount($cca->budget_allocated); ?></td>
-                                <td class="text-right"><?php echo excs_amount($cca->actual+$cca->in_transit); ?></td>
-                                <td class="text-right"><?php echo excs_amount($cca->allocation_amount); ?></td>
-                                <td class="text-center">
-                                    <a data-id="<?php echo $cca->exc_tp_cc_allocations_id; ?>"
-                                       class="fa fa-edit text-success editCostComponent"></a>
-                                    <a data-id="<?php echo $cca->exc_tp_cc_allocations_id; ?>"
-                                       class="fa fa-times text-danger deleteCostComponent"></a>
-                                </td>
-                            </tr>
+                    <?php }} ?>
 
-                        <?php }
-                    } ?>
-                    </tbody>
-                </table>
 
-            </div>
+
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th class="text-center" colspan="6">
+                        Total
+                    </th>
+                    <th class="text-right">
+                        <span class="grandTotal"></span>
+                    </th>
+                    <?php if ($travel_plan->plan->currency_code != 'BDT') { ?>
+                        <th class="text-right bdtInfo">
+                            <span class="grandTotalBDT"></span>
+                        </th>
+                    <?php } ?>
+
+                    <th></th>
+                </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 </div>
 
 <?php $this->load->view('modals/travel_cost_component_modal'); ?>
-<?php //$this->load->view('modals/edit_travel_cost_component_modal'); ?>
+<?php $this->load->view('modals/edit_travel_cost_component_modal'); ?>
 
 
 <script>

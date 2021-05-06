@@ -17,20 +17,17 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
+                            <label for="">Passenger Type</label>
                             <div class="form-group">
-                                <label for="">Passenger Type</label>
-                                <select class="form-control" name="PASSENGER_TYPE" required>
-                                    <option value="">Please Select One</option>
-                                    <option value="ADT">Adult</option>
-                                    <option value="CHD">Child</option>
-                                    <option value="INF">Infant</option>
-                                </select>
+                                <input type="radio" name="PASSENGER_TYPE" value="ADT" required> Adult&nbsp;
+                                <input type="radio" name="PASSENGER_TYPE" value="CHD" required> Child&nbsp;
+                                <input type="radio" name="PASSENGER_TYPE" value="INF" required> Infant
                             </div>
 
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <label for="exampleFormControlSelect1">Passenger Name</label>
+                                <label for="">Passenger Name</label>
                                 <input type="text" class="form-control" name="PASSENGER_NAME">
                             </div>
                         </div>
@@ -39,14 +36,14 @@
                     <div class="row flex flex-row" style="align-items: center">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <label for="exampleFormControlInput1">Date Of Barth</label>
+                                <label for="">Date Of Barth</label>
                                 <input type="date" data-date-format='yyyy-mm-dd'
                                        class="form-control" name="DOB" value="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <label for="exampleFormControlSelect1">Passport No.</label>
+                                <label for="">Passport No.</label>
                                 <input type="text" class="form-control" name="PASSPORT_NO">
                             </div>
                         </div>
@@ -57,7 +54,7 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <label for="exampleFormControlInput1">Passport Expiry Date</label>
+                                <label for="">Passport Expiry Date</label>
                                 <input type="date" data-date-format='yyyy-mm-dd'
                                        class="form-control" name="PASSPORT_EXP_DATE" value="<?php echo date('Y-m-d'); ?>">
                             </div>

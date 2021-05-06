@@ -1,8 +1,8 @@
 function ISODateString(d){
     function pad(n){return n<10 ? '0'+n : n}
-    return d.getUTCFullYear()+'-'
+    return pad(d.getUTCDate()+1)+'-'
         + pad(d.getUTCMonth()+1)+'-'
-        + pad(d.getUTCDate())
+        + d.getUTCFullYear();
 }
 
 function removeNullFromObject(object) {
@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     $("input[type='date']").datepicker({dateFormat: "yyyy-MM-dd"});
 
-    // $("input[type='date']").datepicker("setDate", new Date());
+    // $("input[type='date']").datepicker({dateFormat: "yyyy-MM-dd"});
 
     $('.modalCalculation').on('keyup', function () {
         var totalAmount = 1;
@@ -241,6 +241,7 @@ $(document).ready(function () {
             var currencyCode = e.val;
             if (currencyCode !== 'BDT') {
                 $('.bdtInfo').show();
+                $('.currencyLabel').text('('+currencyCode+')');
             } else {
                 $('#exchangeRate').val(1);
                 $('.bdtInfo').hide();
@@ -257,12 +258,12 @@ $(document).ready(function () {
 
     $('#onBehalfOf').on('change', function () {
 
-        var employeeId = $(this).val();
+        var employeeID = $(this).val();
         var memoRefNo = $('#memoRefNo');
         memoRefNo.empty().append(new Option()).trigger('change');
 
         var data = JSON.stringify({
-            'EMPLOYEE_ID': employeeId
+            'EMPLOYEE_ID': employeeID
         });
 
         $.ajax({
@@ -298,7 +299,7 @@ $(document).ready(function () {
         $.ajax({
             url: 'excs/get_memo_references',
             type: 'POST',
-            data: {employeeId: employeeId},
+            data: {employeeID: employeeID},
             error: function(error) {
                 console.log(error)
             },

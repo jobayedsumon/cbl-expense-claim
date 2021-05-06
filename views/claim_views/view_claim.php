@@ -329,7 +329,7 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
         <div class="col-lg-6">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><strong>Approval Persons</strong></h3>
+                    <h3 class="panel-title"><strong>Approval Person</strong></h3>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -395,9 +395,9 @@ if ($claim_information->claim->claim_status == '203') $status_color = 'text-red'
 
     </div>
 
-    <?php if (in_array(100, $level) && $admin_view) $this->load->view('claim_views/change_approval_person_conditional'); ?>
+    <?php if (in_array(100, $level) && $admin_view) $this->load->view('common/change_approval_person_conditional'); ?>
 
-    <?php if (isset($userIsApprover) && $userIsApprover == true && $approver_view) $this->load->view('claim_views/claim_action_conditional'); ?>
+    <?php if (isset($userIsApprover) && $userIsApprover == true && $approver_view) $this->load->view('common/approver_action_conditional'); ?>
 
 </div>
 

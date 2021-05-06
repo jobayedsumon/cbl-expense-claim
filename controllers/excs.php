@@ -196,14 +196,67 @@ class Excs extends Excs_Common
     public function travel_cost_component($plan_id)
     {
         $data['travel_plan'] = $this->get_plan_details($plan_id);
+        $data['purpose_list'] = $this->get_purpose_list();
+        $data['projects'] = $this->get_projects();
         $data['employee_information'] = $this->get_employee_information();
-        $data['cost_center_list'] = $this->get_cost_center_list();
-        $data['sol_list'] = $this->get_sol_list();
         $level = $this->session->userdata('LEVEL_ID');
         if (empty($level)) {
             redirect(base_url('login_cont'));
         } else {
             $this->render_page('travel_cost_component', $data);
+        }
+    }
+
+    public function view_plan($plan_id)
+    {
+        $data['travel_plan'] = $this->get_plan_details($plan_id);
+        $data['employee_information'] = $this->get_employee_information($data['travel_plan']->plan->employee_id);
+        $data['employee_list'] = $this->get_employee_list();
+        $level = $this->session->userdata('LEVEL_ID');
+        $data['level'] = $level;
+        $data['approver_view'] = false;
+        $data['admin_view'] = false;
+
+        if ($this->input->get()) {
+            if(array_key_exists('approver', $this->input->get())) {
+                $data['approver_view'] = true;
+            }
+            if(array_key_exists('admin', $this->input->get())) {
+                $data['admin_view'] = true;
+            }
+        }
+        if (empty($level)) {
+            redirect(base_url('login_cont'));
+        } else {
+            $this->render_page('view_plan', $data);
+        }
+    }
+
+    public function manage_travel_plan()
+    {
+        $data['title'] = 'Manage Travel Plan';
+        $data['employee_list'] = $this->get_employee_list();
+        $data['statuses'] = $this->get_statuses();
+
+        $level = $this->session->userdata('LEVEL_ID');
+        if (empty($level) || !in_array(100, $level)) {
+            redirect(base_url('login_cont'));
+        } else {
+            $this->render_page('manage_travel_plan', $data);
+        }
+    }
+
+    public function travel_plan_approval_list()
+    {
+        $data['title'] = 'Travel Plan Approval List';
+        $data['employee_list'] = $this->get_employee_list();
+        $data['statuses'] = $this->get_statuses();
+
+        $level = $this->session->userdata('LEVEL_ID');
+        if (empty($level)) {
+            redirect(base_url('login_cont'));
+        } else {
+            $this->render_page('travel_plan_approval_list', $data);
         }
     }
 

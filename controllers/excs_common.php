@@ -297,7 +297,7 @@ class Excs_Common extends Custom_Controller
     public function get_memo_references()
     {
 
-        if (!$this->input->post('employeeId')) {
+        if (!$this->input->post('employeeID')) {
 
             $params = array('EMPLOYEE_ID' => $this->user->EMPLOYEE_ID);
             $data = json_encode($params);
@@ -320,7 +320,7 @@ class Excs_Common extends Custom_Controller
         }
         else {
 
-            $params = array('EMPLOYEE_ID' => $this->input->post('employeeId'));
+            $params = array('EMPLOYEE_ID' => $this->input->post('employeeID'));
             $data = json_encode($params);
             $ch = curl_init();
             $url = excs_url().'/memos';
@@ -340,7 +340,7 @@ class Excs_Common extends Custom_Controller
     public function get_advance_references()
     {
 
-        if (!$this->input->post('employeeId')) {
+        if (!$this->input->post('employeeID')) {
 
             $params = array('EMPLOYEE_ID' => $this->user->EMPLOYEE_ID);
             $data = json_encode($params);
@@ -363,7 +363,7 @@ class Excs_Common extends Custom_Controller
         }
         else {
 
-            $params = array('EMPLOYEE_ID' => $this->input->post('employeeId'));
+            $params = array('EMPLOYEE_ID' => $this->input->post('employeeID'));
             $data = json_encode($params);
             $ch = curl_init();
             $url = excs_url().'/advances';

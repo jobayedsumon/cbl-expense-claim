@@ -1,7 +1,5 @@
 <link rel="stylesheet" href="<?php echo base_url('application/modules/excs/css/excs_common.css') ?>">
 
-
-
 <div class="panel panel-success">
     <div class="panel-heading">
         <h3 class="panel-title">Travel Plan</h3>
@@ -16,7 +14,7 @@
 
                 <div class="col-md-9 col-sm-9">
 
-                    <form id="travelPlanStoreForm" autocomplete="off">
+                    <form id="travelPlanStoreForm" autocomplete="off" >
                         <div class="row" style="margin-bottom: 10px">
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
@@ -70,19 +68,15 @@
                                                 </option>
                                             <?php }} ?>
 
-
                                     </select>
                                 </div>
 
                             </div>
                             <div class="col-md-4 col-sm-4">
+                                <label for="exampleFormControlSelect1">Travel Type</label>
                                 <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Travel Area</label>
-                                    <select class="form-control" id="travelArea" name="TRAVEL_AREA">
-                                        <option value="">Please Select One</option>
-                                        <option <?php echo $travel_plan->plan->travel_area == 'Domestic' ? 'selected' : ''; ?> value="Domestic">Domestic</option>
-                                        <option <?php echo $travel_plan->plan->travel_area == 'International' ? 'selected' : ''; ?> value="International">International</option>
-                                    </select>
+                                    <input required type="radio" name="TRAVEL_AREA" <?php echo $travel_plan->plan->travel_area == 'Domestic' || !$travel_plan->plan->travel_area ? 'checked' : ''; ?> value="Domestic"> Domestic
+                                    <input required type="radio" name="TRAVEL_AREA" <?php echo $travel_plan->plan->travel_area == 'International' ? 'checked' : ''; ?> value="International"> International
                                 </div>
 
                             </div>
@@ -127,8 +121,7 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">City to be visited</label>
-                                    <input type="text" data-date-format='yyyy-mm-dd'
-                                           class="form-control" name="CITY_TO_VISITED" value="<?php echo $travel_plan->plan->city_to_visited; ?>">
+                                    <input type="text" class="form-control" name="CITY_TO_VISITED" value="<?php echo $travel_plan->plan->city_to_visited; ?>" autocomplete="nope">
                                 </div>
 
                             </div>
@@ -186,55 +179,16 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <label for="hotelAddress">Hotel Address</label>
-                                    <textarea maxlength="255" class="form-control" id="hotelAddress" name="HOTEL_ADDRESS" rows="2"><?php echo $travel_plan->plan->hotel_address; ?></textarea>
+                                    <textarea maxlength="255" class="form-control" id="hotelAddress" name="HOTEL_ADDRESS" rows="2" autocomplete="nope"><?php echo $travel_plan->plan->hotel_address; ?></textarea>
                                 </div>
 
                             </div>
 
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
-                                    <label for="exampleFormControlSelect2">Employee purchase Tkt</label>
-                                    <select class="form-control" name="EMPLOYEE_PURCHASE_TKT" required>
-                                        <option value="">Please Select One</option>
-                                        <option <?php echo $travel_plan->plan->employee_purchase_tkt ? 'selected' : ''; ?> value="1">Yes</option>
-                                        <option <?php echo !$travel_plan->plan->employee_purchase_tkt ? 'selected' : ''; ?> value="0">No</option>
-                                    </select>
+                                    <label for="exampleFormControlInput1">Projected Amount (<span class="currencyCodeText">BDT</span>)</label>
+                                    <input step=".01" type="number" id="projectedAmount" class="form-control" min="1.00" value="<?php echo $travel_plan->plan->projected_amount ? excs_amount($travel_plan->plan->projected_amount) : '1.00'; ?>" name="PROJECTED_AMOUNT" required>
                                 </div>
-
-                            </div>
-
-
-
-
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect2">Insurance Applicable?</label>
-                                    <select class="form-control" name="INSURANCE_APPLICABLE" required>
-                                        <option value="">Please Select One</option>
-                                        <option <?php echo $travel_plan->plan->insurance_applicable ? 'selected' : ''; ?> value="1">Yes</option>
-                                        <option <?php echo !$travel_plan->plan->insurance_applicable ? 'selected' : ''; ?> value="0">No</option>
-                                    </select>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput1">Projected Amount</label>
-                                    <input step=".01" type="number" class="form-control" min="1.00" value="<?php echo $travel_plan->plan->projected_amount ? excs_amount($travel_plan->plan->projected_amount): 1.00; ?>" name="PROJECTED_AMOUNT" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 col-sm-4">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput1">Amount (BDT)</label>
-                                    <input step=".01" type="number" class="form-control" min="1.00" value="<?php echo $travel_plan->plan->projected_amount_bdt ? excs_amount($travel_plan->plan->projected_amount_bdt): 1.00; ?>" name="PROJECTED_AMOUNT_BDT" required>
-                                </div>
-
                             </div>
 
                         </div>
@@ -249,31 +203,99 @@
 
                             </div>
 
-                            <div class="col-md-8 col-sm-8">
-                                <label for="">Number of PAX</label>
-                                <div class="row">
-
-                                    <div class="col-md-4 col-sm-4 flex flex-row items-center">
-                                        <input style="margin-right: 10px" step="1" type="number" class="form-control" min="1" value="<?php echo $travel_plan->plan->pax_adult ? $travel_plan->plan->pax_adult: 1; ?>" name="PAX_ADULT" required>
-                                        <span>ADT</span>
-                                    </div>
-
-                                    <div class="col-md-4 col-sm-4 flex flex-row items-center">
-                                        <input style="margin-right: 10px" step="1" type="number" class="form-control" min="0" value="<?php echo $travel_plan->plan->pax_child ? $travel_plan->plan->pax_child: 0; ?>" name="PAX_CHILD" required>
-                                        <span>CHD</span>
-                                    </div>
-
-                                    <div class="col-md-4 col-sm-4 flex flex-row items-center">
-                                        <input style="margin-right: 10px" step="1" type="number" class="form-control"
-                                               min="0" value="<?php echo $travel_plan->plan->pax_infant ? $travel_plan->plan->pax_infant: 0; ?>" name="PAX_INFANT" required>
-                                        <span>INF</span>
-                                    </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label for="">Number of Person</label>
+                                    <input style="margin-right: 10px" step="1" type="number" class="form-control" min="1" value="<?php echo $travel_plan->plan->pax_adult ? $travel_plan->plan->pax_adult: 1; ?>" name="PAX_ADULT" required>
                                 </div>
+
                             </div>
+
+                            <div class="col-md-4 col-sm-4 ">
+                                <div class="form-group bdtInfo">
+                                    <label for="exampleFormControlInput1">Projected Amount (BDT)</label>
+                                    <input step=".01" type="number" id="projectedAmountBDT" class="form-control" min="1.00" value="<?php echo $travel_plan->plan->projected_amount_bdt ? excs_amount($travel_plan->plan->projected_amount_bdt) : '1.00'; ?>" name="PROJECTED_AMOUNT_BDT" required>
+                                </div>
+
+                            </div>
+
+<!--                            <div class="col-md-8 col-sm-8">-->
+<!---->
+<!--                                <div class="row">-->
+<!---->
+<!--                                    <div class="col-md-4 col-sm-4 flex flex-row items-center">-->
+<!--                                       <span>ADT</span>-->
+<!--                                    </div>-->
+<!---->
+<!--                                    <div class="col-md-4 col-sm-4 flex flex-row items-center">-->
+<!--                                        <input style="margin-right: 10px" step="1" type="number" class="form-control" min="0" value="--><?php //echo $travel_plan->plan->pax_child ? $travel_plan->plan->pax_child: 0; ?><!--" name="PAX_CHILD" required>-->
+<!--                                        <span>CHD</span>-->
+<!--                                    </div>-->
+<!---->
+<!--                                    <div class="col-md-4 col-sm-4 flex flex-row items-center">-->
+<!--                                        <input style="margin-right: 10px" step="1" type="number" class="form-control"-->
+<!--                                               min="0" value="--><?php //echo $travel_plan->plan->pax_infant ? $travel_plan->plan->pax_infant: 0; ?><!--" name="PAX_INFANT" required>-->
+<!--                                        <span>INF</span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
 
                         </div>
 
+                        <div class="row">
+
+                            <div class="col-md-12 col-sm-12">
+
+                                <div class="tableHeading">
+                                    <h3 class="panel-title-secondary">CC Allocation</h3>
+                                    <a class="btn customBtn pull-right" style="margin-bottom: 10px" data-toggle="modal"
+                                       data-target="#travelCcAllocationModal">Add</a>
+                                </div>
+
+
+                                <table id="travelCcAllocationTable"
+                                       class="table table-bordered table-condensed table-hover table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>SOL</th>
+                                        <th>CC</th>
+                                        <th>Ratio(%)</th>
+                                        <th>Budget Allocated</th>
+                                        <th>Budget Utilized</th>
+                                        <th>Budget Request</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php if (isset($travel_plan->cca)) {
+                                        foreach ($travel_plan->cca as $index => $cca) {
+                                            ?>
+                                            <tr>
+                                                <td class="tableSerial"><?php echo $index + 1; ?></td>
+                                                <td><?php echo $cca->sol_name; ?></td>
+                                                <td><?php echo $cca->cost_center_name; ?></td>
+                                                <td class="text-right"><?php echo excs_amount($cca->allocation_ratio); ?></td>
+                                                <td class="text-right"><?php echo excs_amount($cca->budget_allocated); ?></td>
+                                                <td class="text-right"><?php echo excs_amount($cca->actual+$cca->in_transit); ?></td>
+                                                <td class="text-right"><?php echo excs_amount($cca->allocation_amount); ?></td>
+                                                <td class="text-center">
+                                                    <a data-id="<?php echo $cca->exc_tp_cc_allocations_id; ?>"
+                                                       class="fa fa-edit text-success editCcAllocation"></a>
+                                                    <a data-id="<?php echo $cca->exc_tp_cc_allocations_id; ?>"
+                                                       class="fa fa-times text-danger deleteCcAllocation"></a>
+                                                </td>
+                                            </tr>
+
+                                        <?php }
+                                    } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
 
                         <input type="hidden" name="ATTACHMENT_FOR" value="8">
                         <input type="hidden" name="REQUEST_ID" value="<?php echo $travel_plan->plan->exc_travel_plans_id; ?>">
@@ -295,6 +317,10 @@
         </div>
     </div>
 </div>
+
+
+<?php $this->load->view('modals/travel_cc_allocation_modal'); ?>
+<?php $this->load->view('modals/edit_travel_cc_allocation_modal'); ?>
 
 
 <script>

@@ -73,7 +73,7 @@ $('#my_table tbody').on( 'click', 'tr', function () {
     if ($(this).hasClass("selected")) {
         $('#view').removeClass('disabled');
         status = $(this).find("div>input.chk_claim").eq(0).attr('claim_status');
-        if (status == 201) {
+        if (status == 201 || status == 204) {
             $('.on_condition').removeClass('disabled');
         }
         else{

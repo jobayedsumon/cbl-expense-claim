@@ -1,8 +1,8 @@
-<div class="modal fade" id="travelCostComponentModal" tabindex="-1" role="dialog" aria-labelledby="travelCostCompoenentModal" aria-hidden="true">
+<div class="modal fade" id="editTravelCostComponentModal" tabindex="-1" role="dialog" aria-labelledby="travelCostCompoenentModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 
-            <form autocomplete="off" id="travelCostComponentModalForm">
+            <form autocomplete="off" id="editTravelCostComponentModalForm">
                 <div class="modal-header">
                     <h5 class="modal-title panel title panel-title-secondary"
                         id="exampleModalLongTitle">Cost Component</h5>
@@ -16,14 +16,14 @@
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Expense Date</label>
                                 <input type="date" data-date-format='yyyy-mm-dd'
-                                       class="form-control" name="EXPENSE_DATE" value="<?php echo date('Y-m-d'); ?>" required>
+                                       class="form-control" id="expenseDate" name="EXPENSE_DATE" required>
                             </div>
 
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Project</label>
-                                <select class="form-control" name="PROJECT_ID">
+                                <select class="form-control" id="project" name="PROJECT_ID">
                                     <option value="">Please Select One</option>
                                     <?php
                                     if ($projects) {
@@ -45,7 +45,7 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="exampleFormControlSelect2">Purpose</label>
-                                <select class="form-control" name="PRODUCT_ID" required>
+                                <select class="form-control" id="purpose" name="PRODUCT_ID" required>
                                     <option value="">Please Select One</option>
                                     <?php
                                     if ($purpose_list) {
@@ -63,7 +63,7 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Purpose Details</label>
-                                <textarea maxlength="255" class="form-control" name="PRODUCT_DETAILS" rows="3"></textarea>
+                                <textarea maxlength="255" class="form-control" id="purposeDetails" name="PRODUCT_DETAILS" rows="3"></textarea>
                             </div>
                         </div>
                     </div>
@@ -72,13 +72,13 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Quantity</label>
-                                <input type="number" class="form-control modalCalculation" min="1" value="1" name="QTY" required>
+                                <input type="number" class="form-control editModalCalculation" min="1" value="1" id="quantity" name="QTY" required>
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Unit/Rate</label>
-                                <input step=".01" type="number" class="form-control modalCalculation" min="1.0" value="1.0" name="RATE" required>
+                                <input step=".01" type="number" class="form-control editModalCalculation" min="1.0" value="1.0" id="rate" name="RATE" required>
                             </div>
                         </div>
                     </div>
@@ -87,14 +87,14 @@
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Total Amount(<?php echo $travel_plan->plan->currency_code; ?>)</label>
-                                <input type="number" readonly step="0.01" class="form-control" min="1.0" value="1.0" id="totalAmount">
+                                <input type="number" readonly step="0.01" class="form-control" min="1.0" value="1.0" id="editTotalAmount">
                             </div>
                         </div>
                         <?php if ($travel_plan->plan->currency_code != 'BDT') { ?>
                             <div class="col-md-6 col-sm-6 bdtInfo">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Total Amount(BDT)</label>
-                                    <input readonly type="number" step="0.01" class="form-control" min="1.0" value="1.0" id="totalAmountBDT">
+                                    <input readonly type="number" step="0.01" class="form-control" min="1.0" value="1.0" id="editTotalAmountBDT">
                                 </div>
                             </div>
                         <?php } ?>
@@ -102,8 +102,9 @@
                     </div>
 
                 </div>
-
+                <input type="hidden" id="costComponentId">
                 <input type="hidden" name="EXC_TRAVEL_PLANS_ID" value="<?php echo $travel_plan->plan->exc_travel_plans_id; ?>">
+                <input type="hidden" name="UPDATED_BY" value="<?php echo $this->user->EMPLOYEE_ID; ?>">
                 <input type="hidden" class="exchangeRateInput" name="EXCHANGE_RATE" value="<?php echo $travel_plan->plan->exchange_rate; ?>">
 
                 <div class="modal-footer">

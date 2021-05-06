@@ -141,10 +141,10 @@ function removeNullFromObject(object) {
     ));
 }
 
-function claim_action(button) {
+function travel_plan_action(button) {
 
         bootbox.confirm({
-            message: "Are you sure you want to "+button+" the claim?",
+            message: "Are you sure you want to "+button+" this travel plan?",
             buttons: {
                 confirm: {
                     label: 'Yes',
@@ -160,12 +160,13 @@ function claim_action(button) {
 
                     var data = JSON.stringify({
                         "CURRENT_APPROVAL_PERSON": $('#currentApprovalPerson').val(),
-                        "EXC_CLAIM_REQUESTS_ID": $('#claimRequestId').val(),
+                        "EXC_TRAVEL_PLANS_ID": $('#travelPlanId').val(),
                         "COMMENTS": $('#comments').val(),
                         "BUTTON": button
                     });
+                    console.log(data);
                     $.ajax({
-                        url: EXCS_URL+'/excs/claims/process',
+                        url: EXCS_URL+'/excs/travel_plans/process',
                         type: 'POST',
                         data: data,
                         error: function(xhr, status, error) {
@@ -176,11 +177,10 @@ function claim_action(button) {
                         },
                         success: function(response) {
                             bootbox.alert({
-                                message: 'The claim has been '+button+'ED successfully.',
+                                message: 'This travel plan has been '+button+'ED successfully.',
                                 className: 'text-success',
                                 callback: function () {
-                                    var url = BASE_URL + 'excs/claim_approval_list';
-                                    window.location.href = url;
+                                    window.location.href = BASE_URL + 'excs/travel_plan_approval_list';
                                 }
                             });
                         }

@@ -11,7 +11,7 @@
     <div class="panel-group">
 
 
-        <?php echo $this->load->view('common/claim_filter'); ?>
+        <?php $this->load->view('common/travel_filter'); ?>
 
 
         <div class="panel  <?php echo payments_panel_class(); ?>">
@@ -20,11 +20,10 @@
                 <span class="panel-title" style="font-size: small !important; "><b><?php echo $title; ?></b></span>
                 <span class="pull-right">
 <!--        <button title="Clone Selected Bill" id="clone" class="btn btn-success disabled" onclick="clone_claim()">Replica</button>-->
-        <button title="View Selected Claim" id="view" class="btn btn-primary disabled" onclick="view_claim()">View</button>
-        <button title="Approve Selected Claim" id="approve" class="btn btn-danger on_condition disabled" onclick="approve_claim()">Approve</button>
+        <button title="View Selected Claim" id="view" class="btn btn-primary disabled" onclick="view_plan()">View</button>
+        <button title="Approve Selected Claim" id="approve" class="btn btn-danger on_condition disabled" onclick="approve_plan()">Approve</button>
         <button title="Reload Table" class="btn btn-default" onclick="reload_table()"><i class="fa fa-refresh"></i> Reload</button>
       </span>
-                <input type="hidden" id="currentApprovalPerson" value="<?php echo $this->user->EMPLOYEE_ID; ?>">
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -33,15 +32,15 @@
                         <tr>
                             <th><input type="checkbox" id="chk_all_at_a_time" class="chk_all_at_a_time"></th>
                             <th>#</th>
-                            <th>Claim Code</th>
-                            <th>Claim Date</th>
-                            <th>Claim Type</th>
-                            <th>Claim Amount</th>
-                            <th>Claim Amount(BDT)</th>
-                            <th>Created At</th>
-                            <th>Created  By</th>
-                            <th>On Behalf of</th>
-                            <th>Status</th>
+                            <th>Plan Code</th>
+                            <th>Date</th>
+                            <th>Created By</th>
+                            <th>On Behalf Of</th>
+                            <th>Travel Date</th>
+                            <th>Purpose</th>
+                            <th>Projected Amount</th>
+                            <th>Advance Amount</th>
+                            <th>Total Person</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -62,4 +61,4 @@
     var BASE_URL = '<?php echo base_url() ?>';
 </script>
 
-<script src="<?php echo base_url('application/modules/excs/js/claim_approval_list.js') ?>"></script>
+<script src="<?php echo base_url('application/modules/excs/js/travel_plan_approval_list.js') ?>"></script>
